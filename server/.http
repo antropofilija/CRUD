@@ -1,0 +1,29 @@
+###
+GET http://localhost:5000/api/crud
+
+###
+GET http://localhost:5000/api/crud/64ac14bf2d8b9cd8ad2280e8
+
+###
+POST http://localhost:5000/api/crud
+content-type: application/json
+
+{
+   "name": "Jhon",
+   "surname": "Smith",
+   "email": "jhonSmith@email.com",
+   "age": 25
+   
+}
+
+
+###
+PUT http://localhost:5000/api/crud/64ac14bf2d8b9cd8ad2280e8
+content-type: application/json
+
+{
+   "age": 30
+}
+
+###
+DELETE http://localhost:5000/api/crud/64ac14bf2d8b9cd8ad2280e8
