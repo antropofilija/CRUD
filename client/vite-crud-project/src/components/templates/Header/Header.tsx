@@ -1,5 +1,12 @@
+import AddButton from '../../molecules/AddButton';
+import { StyledAddButton } from './styles';
+
 const Header = () => {
-  return <div>Header</div>;
+  return (
+    <StyledAddButton>
+      <AddButton />
+    </StyledAddButton>
+  );
 };
 
 export default Header;
