@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '../../atoms/Button';
-import { StyledLi, StyledConfirm } from './styles';
-
-interface IUser {
-  _id: string;
-  name: string;
-  surname: string;
-  email: string;
-  age: number;
-}
+import { StyledLi, StyledConfirm, StyledTableRow } from './styles';
+import Input from '../../atoms/Input';
+import Modal from '../../atoms/Modal';
+import { IUser } from '../../../shared/api/types';
 
 const TableRow = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -19,6 +14,7 @@ const TableRow = () => {
   const [editedSurname, setEditedSurname] = useState('');
   const [editedEmail, setEditedEmail] = useState('');
   const [editedAge, setEditedAge] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetchUsers();
@@ -42,6 +38,7 @@ const TableRow = () => {
       if (deletingUserId) {
         await axios.delete(`http://localhost:5000/api/crud/${deletingUserId}`);
         await fetchUsers();
+        setShowModal(true);
       }
       setDeletingUserId(null);
     } catch (error) {
@@ -97,32 +94,36 @@ const TableRow = () => {
     setEditedAge('');
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <div>
       <ul>
         {users.map((user) => (
           <StyledLi key={user._id}>
             {editingUserId === user._id ? (
-              <div>
-                <input
+              <StyledTableRow>
+                <Input
                   type='text'
                   value={editedName}
-                  onChange={(e) => setEditedName(e.target.value)}
+                  setValue={setEditedName}
                 />
-                <input
+                <Input
                   type='text'
                   value={editedSurname}
-                  onChange={(e) => setEditedSurname(e.target.value)}
+                  setValue={setEditedSurname}
                 />
-                <input
+                <Input
                   type='email'
                   value={editedEmail}
-                  onChange={(e) => setEditedEmail(e.target.value)}
+                  setValue={setEditedEmail}
                 />
-                <input
+                <Input
                   type='number'
                   value={editedAge}
-                  onChange={(e) => setEditedAge(e.target.value)}
+                  setValue={setEditedAge}
                 />
                 <StyledConfirm>
                   <Button onClick={handleSave} styletype='add'>
@@ -132,23 +133,25 @@ const TableRow = () => {
                     Atšaukti
                   </Button>
                 </StyledConfirm>
-              </div>
+              </StyledTableRow>
             ) : (
-              <div>
+              <StyledTableRow>
                 <p>{user.name}</p>
                 <p>{user.surname}</p>
                 <p>{user.email}</p>
                 <p>{user.age}</p>
                 {deletingUserId === user._id ? (
-                  <StyledConfirm>
+                  <div>
                     <p>Ar tikrai norite ištrinti?</p>
-                    <Button onClick={handleConfirmDelete} styletype='add'>
-                      Taip
-                    </Button>
-                    <Button onClick={handleCancelDelete} styletype='delete'>
-                      Atšaukti
-                    </Button>
-                  </StyledConfirm>
+                    <StyledConfirm>
+                      <Button onClick={handleConfirmDelete} styletype='add'>
+                        Taip
+                      </Button>
+                      <Button onClick={handleCancelDelete} styletype='delete'>
+                        Atšaukti
+                      </Button>
+                    </StyledConfirm>
+                  </div>
                 ) : (
                   <StyledConfirm>
                     <Button
@@ -165,11 +168,14 @@ const TableRow = () => {
                     </Button>
                   </StyledConfirm>
                 )}
-              </div>
+              </StyledTableRow>
             )}
           </StyledLi>
         ))}
       </ul>
+      <Modal onClose={closeModal} isOpen={showModal}>
+        <p>Vartotojas ištrintas sėkmingai</p>
+      </Modal>
     </div>
   );
 };

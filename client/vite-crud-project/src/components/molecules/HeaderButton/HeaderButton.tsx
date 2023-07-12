@@ -34,7 +34,7 @@ const HeaderButton = () => {
       )}
       {isFormSubmitted && (
         <Modal onClose={handleCloseModal} isOpen={true}>
-          User added successfully
+          Vartotojas pridėtas sėkmingai
         </Modal>
       )}
     </>

@@ -11,7 +11,7 @@ export type FormValue = {
 };
 
 type FormProps = {
-  onSubmitSuccess: () => void; // Define onSubmitSuccess prop
+  onSubmitSuccess: () => void;
 };
 
 const Form: React.FC<FormProps> = ({ onSubmitSuccess }) => {
@@ -28,14 +28,12 @@ const Form: React.FC<FormProps> = ({ onSubmitSuccess }) => {
       age: parseInt(age),
     };
 
-    // Perform form submission logic here
-
     setName('');
     setSurname('');
     setEmail('');
     setAge('');
 
-    onSubmitSuccess(); // Notify the parent component about the successful submission
+    onSubmitSuccess();
   };
 
   return (

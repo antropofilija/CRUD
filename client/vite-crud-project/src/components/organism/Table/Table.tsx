@@ -9,13 +9,12 @@ const Table = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [data, setData] = useState<IUser[]>([]);
   const [loading, setLoading] = useState(true);
-  const [refreshFlag, setRefreshFlag] = useState(true); // Add refreshFlag state
 
   const itemsPerPage = 10;
 
   useEffect(() => {
     fetchData();
-  }, [currentPage, refreshFlag]); // Add refreshFlag to the dependency array
+  }, [currentPage]);
 
   const fetchData = async () => {
     try {
@@ -68,15 +67,6 @@ const Table = () => {
           {x}
         </button>
       ));
-  };
-
-  const addNewUser = async (user: IUser) => {
-    try {
-      await axios.post('http://localhost:5000/api/crud', user);
-      setRefreshFlag(!refreshFlag);
-    } catch (error) {
-      console.error('Error adding new user:', error);
-    }
   };
 
   return (
