@@ -9,10 +9,10 @@ POST http://localhost:5000/api/crud
 content-type: application/json
 
 {
-   "name": "Jane",
-   "surname": "Doe",
-   "email": "doeJ@email.com",
-   "age": 31
+   "name": "Emet",
+   "surname": "Curt",
+   "email": "emetcurt@gmail.com",
+   "age": 26
    
 }
 

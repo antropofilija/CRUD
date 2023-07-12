@@ -11,8 +11,6 @@ httpClient.interceptors.response.use(
   (error) => Promise.reject(error)
 );
 
-export default httpClient;
-
 class Api_instance {
   private users: string;
 
