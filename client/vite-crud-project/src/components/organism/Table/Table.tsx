@@ -5,8 +5,6 @@ import axios from 'axios';
 import { IUser } from '../../../shared/api/types';
 
 const Table = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
   const [data, setData] = useState<IUser[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -14,59 +12,22 @@ const Table = () => {
 
   useEffect(() => {
     fetchData();
-  }, [currentPage]);
+  }, []);
 
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        `http://localhost:5000/api/crud?page=${currentPage}&limit=${itemsPerPage}`
-      );
+      const response = await axios.get(`http://localhost:5000/api/crud`);
 
       const responseData = response.data;
 
       setData(responseData.items);
-      setTotalPages(responseData.totalPages);
+
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
       setLoading(false);
     }
-  };
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  const generatePagination = () => {
-    return Array(Math.ceil(Response.length / itemsPerPage))
-      .fill(0)
-      .map((_, i) => i + 1)
-      .filter((x, _, arr) => {
-        if (x === 1) {
-          return x;
-        } else if (x === currentPage) {
-          return x;
-        } else if (
-          x - 1 === currentPage ||
-          x - 2 === currentPage ||
-          x + 1 === currentPage ||
-          x + 2 === currentPage
-        ) {
-          return x;
-        } else if (x === arr.length) {
-          return x;
-        }
-      })
-      .map((x) => (
-        <button
-          key={x}
-          onClick={() => setCurrentPage(x)}
-          className={currentPage === x ? 'selected' : ''}
-        >
-          {x}
-        </button>
-      ));
   };
 
   return (
@@ -80,8 +41,6 @@ const Table = () => {
         </StyledNamesDiv>
         <TableRow />
       </StyledTableDiv>
-
-      <div>{generatePagination()}</div>
     </div>
   );
 };

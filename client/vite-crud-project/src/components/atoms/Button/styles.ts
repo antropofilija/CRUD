@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 
 interface IStyledButtonProps {
-  styletype?: 'add' | 'delete' | 'change' | 'save';
+  styletype: 'add' | 'delete' | 'change' | 'save' | 'add selected';
 }
 
 export const StyledButton = styled.button<IStyledButtonProps>`

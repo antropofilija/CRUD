@@ -1,4 +1,3 @@
-import AddButton from '../../molecules/AddButton';
 import HeaderButton from '../../molecules/HeaderButton';
 import { StyledAddButton } from './styles';
 

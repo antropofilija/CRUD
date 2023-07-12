@@ -33,3 +33,8 @@ export const StyledTableRow = styled.div`
     gap: 50px;
   }
 `;
+
+export const StyledPagination = styled.div`
+  display: flex;
+  gap: 10px;
+`;
