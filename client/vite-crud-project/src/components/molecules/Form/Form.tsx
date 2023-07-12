@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Input from '../../atoms/Input';
 import AddButton from '../AddButton';
-// import { FormValue } from '../AddButton/AddButton';
+import Modal from '../../atoms/Modal';
 
 export type FormValue = {
   name: string;
@@ -10,7 +10,11 @@ export type FormValue = {
   age: number;
 };
 
-const Form = () => {
+type FormProps = {
+  onSubmitSuccess: () => void; // Define onSubmitSuccess prop
+};
+
+const Form: React.FC<FormProps> = ({ onSubmitSuccess }) => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
@@ -24,10 +28,14 @@ const Form = () => {
       age: parseInt(age),
     };
 
+    // Perform form submission logic here
+
     setName('');
     setSurname('');
     setEmail('');
     setAge('');
+
+    onSubmitSuccess(); // Notify the parent component about the successful submission
   };
 
   return (
@@ -35,8 +43,8 @@ const Form = () => {
       <Input
         type='text'
         value={name}
-        placeholder='Name'
-        labelText='Vardenis'
+        placeholder='Vardenis'
+        labelText='Vardas'
         setValue={setName}
       />
       <Input

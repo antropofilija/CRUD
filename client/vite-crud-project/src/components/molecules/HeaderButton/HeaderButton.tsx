@@ -1,17 +1,23 @@
-import { SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import Button from '../../atoms/Button';
 import Modal from '../../atoms/Modal';
 import Form from '../Form';
 
 const HeaderButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   const handleButtonClick = () => {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const handleCloseModal = () => {
     setIsModalOpen(false);
+    setIsFormSubmitted(false);
+  };
+
+  const handleFormSubmit = () => {
+    setIsFormSubmitted(true);
   };
 
   return (
@@ -21,9 +27,14 @@ const HeaderButton = () => {
         onClick={handleButtonClick}
         children={'Pridėti naują'}
       />
-      {isModalOpen && (
-        <Modal onClose={closeModal} isOpen={isModalOpen}>
-          {<Form />}
+      {isModalOpen && !isFormSubmitted && (
+        <Modal onClose={handleCloseModal} isOpen={isModalOpen}>
+          <Form onSubmitSuccess={handleFormSubmit} />
+        </Modal>
+      )}
+      {isFormSubmitted && (
+        <Modal onClose={handleCloseModal} isOpen={true}>
+          User added successfully
         </Modal>
       )}
     </>
