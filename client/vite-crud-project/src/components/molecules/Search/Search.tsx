@@ -28,7 +28,7 @@ const Search: React.FC<SearchProps> = ({
       value={searchValue}
       onChange={handleChange}
       onKeyPress={handleKeyPress}
-      placeholder='Search...'
+      placeholder='Paieška...'
     />
   );
 };

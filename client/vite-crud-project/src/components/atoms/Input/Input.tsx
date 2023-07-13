@@ -19,7 +19,12 @@ const Input = ({
   labelText,
 }: IInputProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    const newValue = e.target.value;
+    if (type === 'number' && Number(newValue) < 1) {
+      setValue('1');
+    } else {
+      setValue(newValue);
+    }
   };
 
   return (

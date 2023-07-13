@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 export const StyledConfirm = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 1.25rem;
 
   @media screen and (max-width: 768px) {
-    gap: 10px;
+    gap: 0.625rem;
   }
 `;
 
@@ -15,22 +15,30 @@ export const StyledLi = styled.li`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  border-top: 0.5px solid ${(props) => props.theme.palette.shades.greyLighter};
+  margin-top: 6px;
 `;
 
 export const StyledTableRow = styled.div`
   display: flex;
   justify-content: left;
-  padding-top: 15px;
-  gap: 20px;
+  padding-top: 0.938rem;
+  gap: 1.25rem;
 
   @media screen and (max-width: 768px) {
-    gap: 10px;
+    gap: 0.625rem;
   }
 `;
 
 export const StyledPagination = styled.div`
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  gap: 0.625rem;
+  margin-top: 1.25rem;
+
+  @media screen and (max-width: 500px) {
+    justify-content: left;
+  }
 `;
 
 export const StyledRows = styled.div`
@@ -38,15 +46,16 @@ export const StyledRows = styled.div`
 
   @media screen and (max-width: 768px) {
     width: 120px;
-    font-size: 12px;
+    font-size: 1rem;
   }
 
   @media screen and (max-width: 500px) {
-    font-size: 12px;
+    width: 180px;
+    font-size: 1rem;
   }
 
   @media screen and (min-width: 501px) and (max-width: 768px) {
-    font-size: 14px;
+    font-size: 1rem;
     width: 190px;
   }
 

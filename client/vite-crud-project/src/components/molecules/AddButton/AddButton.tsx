@@ -14,7 +14,7 @@ const AddButton = ({ formValue, onSubmit }: IAddButtonProps) => {
         'http://localhost:5000/api/crud',
         formValue
       );
-      console.log('Data sent to the database:', response.data);
+
       await onSubmit();
     } catch (error) {
       console.error('Error sending data to the database:', error);

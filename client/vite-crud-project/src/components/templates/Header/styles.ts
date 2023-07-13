@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 
 export const StyledWrapper = styled.div`
   display: flex;
-  margin: 10px;
+  margin: 0.625rem;
 
   @media screen and (min-width: 768px) {
     margin: 0 auto;
@@ -26,9 +26,9 @@ export const StyledWrapper = styled.div`
 `;
 
 export const StyledAddButton = styled.div`
-  width: 95%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  gap: 40px;
+  gap: 2.5rem;
   margin-top: 2.063rem;
 `;

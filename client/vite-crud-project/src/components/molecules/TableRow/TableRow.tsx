@@ -101,7 +101,7 @@ const TableRow: React.FC<TableRowProps> = ({ users, onDeleteUser }) => {
           `http://localhost:5000/api/crud/${editingUserId}`,
           editedUser
         );
-        await fetchUsers(); // Update the fetched users
+        await fetchUsers();
         setEditingUserId(null);
         setEditedName('');
         setEditedSurname('');
@@ -135,7 +135,7 @@ const TableRow: React.FC<TableRowProps> = ({ users, onDeleteUser }) => {
         <Button
           key={i}
           onClick={() => setCurrentPage(i)}
-          styletype={currentPage === i ? 'add selected' : 'save'}
+          styletype={currentPage === i ? 'add' : 'add'}
         >
           {String(i)}
         </Button>

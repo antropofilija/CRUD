@@ -35,6 +35,7 @@ const Form: React.FC<FormProps> = ({ onSubmitSuccess }) => {
     setAge('');
 
     onSubmitSuccess();
+    window.location.reload();
   };
 
   return (
