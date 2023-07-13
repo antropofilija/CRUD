@@ -1,8 +1,6 @@
-import React from 'react';
 import Button from '../../atoms/Button';
 import axios from 'axios';
 import { FormValue } from '../Form/Form';
-import Modal from '../../atoms/Modal';
 
 interface IAddButtonProps {
   formValue: FormValue;

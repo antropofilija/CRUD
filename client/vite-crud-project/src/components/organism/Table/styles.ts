@@ -9,11 +9,31 @@ export const StyledTableDiv = styled.div`
   margin-left: auto;
   margin-right: auto;
   margin-top: 50px;
-  max-width: 1114px;
   padding: 30px;
+  max-width: 1114px;
 
-  @media (max-width: 768px) {
-    align-items: center;
+  @media screen and (max-width: 500px) {
+    margin-top: 20px;
+    padding: 10px;
+    overflow: auto;
+    margin: 10px;
+  }
+
+  @media screen and (min-width: 501px) and (max-width: 768px) {
+    margin-top: 30px;
+    padding: 20px;
+    overflow: auto;
+    margin: 10px;
+  }
+
+  @media screen and (min-width: 769px) and (max-width: 920px) {
+    margin-top: 40px;
+    padding: 25px;
+    overflow: auto;
+  }
+
+  @media screen and (min-width: 921px) {
+    margin-top: 50px;
   }
 `;
 
@@ -21,13 +41,17 @@ export const StyledNamesDiv = styled.div`
   display: flex;
   font-weight: 500;
   justify-content: left;
-  gap: 100px;
-
-  @media (max-width: 768px) {
-    gap: 50px; /* Adjust the gap for smaller screens */
+  gap: 20px;
+  @media screen and (max-width: 500px) {
+    gap: 10px;
   }
 `;
 
 export const StyledRow = styled.p`
-  width: 100px;
+  width: 180px;
+
+  @media screen and (max-width: 500px) {
+    width: 120px;
+    font-size: 12px;
+  }
 `;

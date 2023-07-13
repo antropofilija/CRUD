@@ -2,9 +2,10 @@ import { styled } from 'styled-components';
 
 export const StyledWrapper = styled.div`
   display: flex;
+  margin: 10px;
 
   @media screen and (min-width: 768px) {
-    margin: 0 auto; /* bus visada centre*/
+    margin: 0 auto;
   }
 
   @media screen and (min-width: 500px) {
@@ -25,7 +26,7 @@ export const StyledWrapper = styled.div`
 `;
 
 export const StyledAddButton = styled.div`
-  width: 100%;
+  width: 95%;
   display: flex;
   justify-content: space-between;
   gap: 40px;

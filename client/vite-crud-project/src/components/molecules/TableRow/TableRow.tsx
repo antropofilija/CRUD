@@ -6,7 +6,6 @@ import {
   StyledConfirm,
   StyledTableRow,
   StyledPagination,
-  StyledWrapper,
   StyledRows,
 } from './styles';
 import Input from '../../atoms/Input';
@@ -148,7 +147,7 @@ const TableRow: React.FC<TableRowProps> = ({ users, onDeleteUser }) => {
 
   return (
     <div>
-      <StyledWrapper>
+      <div>
         <ul>
           {filteredUsers.map((user) => (
             <StyledLi key={user._id}>
@@ -242,7 +241,7 @@ const TableRow: React.FC<TableRowProps> = ({ users, onDeleteUser }) => {
           <p>Vartotojas ištrintas sėkmingai</p>
         </Modal>
         <StyledPagination>{generatePagination()}</StyledPagination>
-      </StyledWrapper>
+      </div>
     </div>
   );
 };

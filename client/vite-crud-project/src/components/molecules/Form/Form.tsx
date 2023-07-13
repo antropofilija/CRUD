@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Input from '../../atoms/Input';
 import AddButton from '../AddButton';
-import Modal from '../../atoms/Modal';
-import { StyledForm, StyledFormColumns } from './styles';
+
+import { StyledForm } from './styles';
 
 export type FormValue = {
   name: string;
