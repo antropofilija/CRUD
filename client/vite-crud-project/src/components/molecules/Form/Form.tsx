@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Input from '../../atoms/Input';
 import AddButton from '../AddButton';
 import Modal from '../../atoms/Modal';
+import { StyledForm, StyledFormColumns } from './styles';
 
 export type FormValue = {
   name: string;
@@ -37,7 +38,7 @@ const Form: React.FC<FormProps> = ({ onSubmitSuccess }) => {
   };
 
   return (
-    <div>
+    <StyledForm>
       <Input
         type='text'
         value={name}
@@ -52,6 +53,7 @@ const Form: React.FC<FormProps> = ({ onSubmitSuccess }) => {
         labelText='Pavardė'
         setValue={setSurname}
       />
+
       <Input
         type='email'
         value={email}
@@ -67,11 +69,13 @@ const Form: React.FC<FormProps> = ({ onSubmitSuccess }) => {
         setValue={setAge}
       />
 
-      <AddButton
-        formValue={{ name, surname, email, age: parseInt(age) }}
-        onSubmit={handleFormSubmit}
-      />
-    </div>
+      <div>
+        <AddButton
+          formValue={{ name, surname, email, age: parseInt(age) }}
+          onSubmit={handleFormSubmit}
+        />
+      </div>
+    </StyledForm>
   );
 };
 

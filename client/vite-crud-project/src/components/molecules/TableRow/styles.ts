@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+export const StyledWrapper = styled.div``;
+
 export const StyledConfirm = styled.div`
   display: flex;
   gap: 20px;
@@ -15,12 +17,6 @@ export const StyledLi = styled.li`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-
-  max-width: 1114px;
-
-  @media (max-width: 768px) {
-    align-items: center;
-  }
 `;
 
 export const StyledTableRow = styled.div`
@@ -37,4 +33,8 @@ export const StyledTableRow = styled.div`
 export const StyledPagination = styled.div`
   display: flex;
   gap: 10px;
+`;
+
+export const StyledRows = styled.div`
+  width: 100px;
 `;

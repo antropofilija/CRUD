@@ -1,45 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TableRow from '../../molecules/TableRow';
-import { StyledNamesDiv, StyledTableDiv } from './styles';
-import axios from 'axios';
+import { StyledNamesDiv, StyledRow, StyledTableDiv } from './styles';
 import { IUser } from '../../../shared/api/types';
 
-const Table = () => {
-  const [data, setData] = useState<IUser[]>([]);
-  const [loading, setLoading] = useState(true);
+interface TableProps {
+  users: IUser[];
+}
 
-  const itemsPerPage = 10;
+const Table: React.FC<TableProps> = ({ users }) => {
+  const [updatedUsers, setUpdatedUsers] = useState<IUser[]>(users);
+
+  const handleDeleteUser = (userId: string) => {
+    const filteredUsers = updatedUsers.filter((user) => user._id !== userId);
+    setUpdatedUsers(filteredUsers);
+  };
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`http://localhost:5000/api/crud`);
-
-      const responseData = response.data;
-
-      setData(responseData.items);
-
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setLoading(false);
-    }
-  };
+    setUpdatedUsers(users);
+  }, [users]);
 
   return (
     <div>
       <StyledTableDiv>
         <StyledNamesDiv>
-          <p>Vardas</p>
-          <p>Pavardė</p>
-          <p>El.Paštas</p>
-          <p>Amžius</p>
+          <StyledRow>Vardas</StyledRow>
+          <StyledRow>Pavardė</StyledRow>
+          <StyledRow>El.Paštas</StyledRow>
+          <StyledRow>Amžius</StyledRow>
         </StyledNamesDiv>
-        <TableRow />
+        <TableRow users={updatedUsers} onDeleteUser={handleDeleteUser} />
       </StyledTableDiv>
     </div>
   );

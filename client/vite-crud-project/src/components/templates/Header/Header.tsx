@@ -1,11 +1,48 @@
+import React from 'react';
+import Input from '../../atoms/Input';
 import HeaderButton from '../../molecules/HeaderButton';
-import { StyledAddButton } from './styles';
+import Search from '../../molecules/Search';
+import { StyledAddButton, StyledWrapper } from './styles';
+import { IUser } from '../../../shared/api/types';
 
-const Header = () => {
+interface HeaderProps {
+  users: IUser[];
+  setFilteredUsers: React.Dispatch<React.SetStateAction<IUser[]>>;
+  searchValue: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Header: React.FC<HeaderProps> = ({
+  users,
+  setFilteredUsers,
+  searchValue,
+  setSearchValue,
+}) => {
+  const handleSearch = () => {
+    const filteredData = users.filter((user) => {
+      const searchLower = searchValue.toLowerCase();
+      const nameMatch = user.name.toLowerCase().includes(searchLower);
+      const surnameMatch = user.surname.toLowerCase().includes(searchLower);
+      const emailMatch = user.email.toLowerCase().includes(searchLower);
+      const ageMatch = user.age.toString().includes(searchValue);
+
+      return nameMatch || surnameMatch || emailMatch || ageMatch;
+    });
+
+    setFilteredUsers(filteredData);
+  };
+
   return (
-    <StyledAddButton>
-      <HeaderButton />
-    </StyledAddButton>
+    <StyledWrapper>
+      <StyledAddButton>
+        <Search
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          onSearch={handleSearch}
+        />
+        <HeaderButton />
+      </StyledAddButton>
+    </StyledWrapper>
   );
 };
 

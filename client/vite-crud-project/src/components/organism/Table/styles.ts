@@ -27,3 +27,7 @@ export const StyledNamesDiv = styled.div`
     gap: 50px; /* Adjust the gap for smaller screens */
   }
 `;
+
+export const StyledRow = styled.p`
+  width: 100px;
+`;

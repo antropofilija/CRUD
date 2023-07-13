@@ -6,13 +6,21 @@ import {
   StyledConfirm,
   StyledTableRow,
   StyledPagination,
+  StyledWrapper,
+  StyledRows,
 } from './styles';
 import Input from '../../atoms/Input';
 import Modal from '../../atoms/Modal';
 import { IUser } from '../../../shared/api/types';
 
-const TableRow = () => {
-  const [users, setUsers] = useState<IUser[]>([]);
+interface TableRowProps {
+  users: IUser[];
+  onDeleteUser: (userId: string) => void;
+}
+
+const TableRow: React.FC<TableRowProps> = ({ users, onDeleteUser }) => {
+  const itemsPerPage = 10;
+  const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
   const [deletingUserId, setDeletingUserId] = useState<string | null>(null);
   const [editingUserId, setEditingUserId] = useState<string | null>(null);
   const [editedName, setEditedName] = useState('');
@@ -23,16 +31,27 @@ const TableRow = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
-  const itemsPerPage = 10;
   useEffect(() => {
-    fetchUsers();
-  }, [currentPage]);
+    setTotalPages(Math.ceil(users.length / itemsPerPage));
+  }, [users]);
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const slicedUsers = users.slice(startIndex, endIndex);
+    setFilteredUsers(slicedUsers);
+  }, [users, currentPage, itemsPerPage]);
 
   const fetchUsers = async () => {
     try {
       const response = await axios.get('http://localhost:5000/api/crud');
-      setUsers(response.data);
-      setTotalPages(Math.ceil(response.data.length / itemsPerPage));
+      const fetchedUsers: IUser[] = response.data;
+      setFilteredUsers(
+        fetchedUsers.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        )
+      );
     } catch (error) {
       console.error('Error fetching users:', error);
     }
@@ -46,7 +65,7 @@ const TableRow = () => {
     try {
       if (deletingUserId) {
         await axios.delete(`http://localhost:5000/api/crud/${deletingUserId}`);
-        await fetchUsers();
+        onDeleteUser(deletingUserId);
         setShowModal(true);
       }
       setDeletingUserId(null);
@@ -83,7 +102,7 @@ const TableRow = () => {
           `http://localhost:5000/api/crud/${editingUserId}`,
           editedUser
         );
-        await fetchUsers();
+        await fetchUsers(); // Update the fetched users
         setEditingUserId(null);
         setEditedName('');
         setEditedSurname('');
@@ -108,81 +127,61 @@ const TableRow = () => {
   };
 
   const generatePagination = () => {
-    const visiblePages = Array(totalPages)
-      .fill(0)
-      .map((_, i) => i + 1)
-      .filter((x, _, arr) => {
-        if (x === 1) {
-          return true;
-        } else if (x === currentPage) {
-          return true;
-        } else if (
-          x - 1 === currentPage ||
-          x - 2 === currentPage ||
-          x + 1 === currentPage ||
-          x + 2 === currentPage
-        ) {
-          return true;
-        } else if (x === arr.length) {
-          return true;
-        }
-        return false;
-      });
+    const visiblePages = [];
+    const rangeStart = Math.max(1, currentPage - 2);
+    const rangeEnd = Math.min(rangeStart + 4, totalPages);
 
-    if (visiblePages.length > 10) {
-      const startIndex = Math.max(0, currentPage - 5);
-      const endIndex = Math.min(startIndex + 10, visiblePages.length);
-      return visiblePages.slice(startIndex, endIndex).map((x) => (
+    for (let i = rangeStart; i <= rangeEnd; i++) {
+      visiblePages.push(
         <Button
-          key={x}
-          onClick={() => setCurrentPage(x)}
-          styletype={currentPage === x ? 'add selected' : 'save'}
+          key={i}
+          onClick={() => setCurrentPage(i)}
+          styletype={currentPage === i ? 'add selected' : 'save'}
         >
-          {String(x)}
+          {String(i)}
         </Button>
-      ));
-    } else {
-      return visiblePages.map((x) => (
-        <Button
-          key={x}
-          onClick={() => setCurrentPage(x)}
-          styletype={currentPage === x ? 'add selected' : 'save'}
-        >
-          {String(x)}
-        </Button>
-      ));
+      );
     }
+
+    return visiblePages;
   };
 
   return (
     <div>
-      <ul>
-        {users
-          .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-          .map((user) => (
+      <StyledWrapper>
+        <ul>
+          {filteredUsers.map((user) => (
             <StyledLi key={user._id}>
               {editingUserId === user._id ? (
                 <StyledTableRow>
-                  <Input
-                    type='text'
-                    value={editedName}
-                    setValue={setEditedName}
-                  />
-                  <Input
-                    type='text'
-                    value={editedSurname}
-                    setValue={setEditedSurname}
-                  />
-                  <Input
-                    type='email'
-                    value={editedEmail}
-                    setValue={setEditedEmail}
-                  />
-                  <Input
-                    type='number'
-                    value={editedAge}
-                    setValue={setEditedAge}
-                  />
+                  <StyledRows>
+                    <Input
+                      type='text'
+                      value={editedName}
+                      setValue={setEditedName}
+                    />
+                  </StyledRows>
+                  <StyledRows>
+                    <Input
+                      type='text'
+                      value={editedSurname}
+                      setValue={setEditedSurname}
+                    />
+                  </StyledRows>
+                  <StyledRows>
+                    <Input
+                      type='email'
+                      value={editedEmail}
+                      setValue={setEditedEmail}
+                    />
+                  </StyledRows>
+                  <StyledRows>
+                    <Input
+                      type='number'
+                      value={editedAge}
+                      setValue={setEditedAge}
+                    />
+                  </StyledRows>
                   <StyledConfirm>
                     <Button onClick={handleSave} styletype='add'>
                       Išsaugoti
@@ -194,10 +193,18 @@ const TableRow = () => {
                 </StyledTableRow>
               ) : (
                 <StyledTableRow>
-                  <p>{user.name}</p>
-                  <p>{user.surname}</p>
-                  <p>{user.email}</p>
-                  <p>{user.age}</p>
+                  <StyledRows>
+                    <p>{user.name}</p>
+                  </StyledRows>
+                  <StyledRows>
+                    <p>{user.surname}</p>
+                  </StyledRows>
+                  <StyledRows>
+                    <p>{user.email}</p>
+                  </StyledRows>
+                  <StyledRows>
+                    <p>{user.age}</p>
+                  </StyledRows>
                   {deletingUserId === user._id ? (
                     <div>
                       <p>Ar tikrai norite ištrinti?</p>
@@ -230,11 +237,12 @@ const TableRow = () => {
               )}
             </StyledLi>
           ))}
-      </ul>
-      <Modal onClose={closeModal} isOpen={showModal}>
-        <p>Vartotojas ištrintas sėkmingai</p>
-      </Modal>
-      <StyledPagination>{generatePagination()}</StyledPagination>
+        </ul>
+        <Modal onClose={closeModal} isOpen={showModal}>
+          <p>Vartotojas ištrintas sėkmingai</p>
+        </Modal>
+        <StyledPagination>{generatePagination()}</StyledPagination>
+      </StyledWrapper>
     </div>
   );
 };

@@ -7,6 +7,8 @@ interface IInputProps {
   setValue: React.Dispatch<React.SetStateAction<string>>;
   placeholder?: string;
   labelText?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const Input = ({
