@@ -1,5 +1,5 @@
-<h1> CRUD app
-<br>
+<h1> CRUD app </h1>
+  
 <p> With this app you can add, delete, update, search users. UX figma design https://www.figma.com/file/gZ63MOLEMwaiRviZnyM9ZM/Baigiamasis-projektas?type=design&node-id=207-2&mode=design&t=uirTFQ7KMFXGv7cs-4.
 
 <br>
@@ -29,6 +29,7 @@
 - Split the terminal and add command `npx tsc --watch`
 
 <h2> Used tools:
+  
 - React 
 - TypeScript
 - Node.js
