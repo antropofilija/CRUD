@@ -20,22 +20,15 @@ const Home = () => {
       const allUsers = response.data;
 
       // Filter users based on search value
-      const filteredData = allUsers.filter(
-        (user: {
-          name: string;
-          surname: string;
-          email: string;
-          age: { toString: () => string | string[] };
-        }) => {
-          const searchLower = searchValue.toLowerCase();
-          const nameMatch = user.name.toLowerCase().includes(searchLower);
-          const surnameMatch = user.surname.toLowerCase().includes(searchLower);
-          const emailMatch = user.email.toLowerCase().includes(searchLower);
-          const ageMatch = user.age.toString().includes(searchValue);
+      const filteredData = allUsers.filter((user: IUser) => {
+        const searchLower = searchValue.toLowerCase();
+        const nameMatch = user.name.toLowerCase().includes(searchLower);
+        const surnameMatch = user.surname.toLowerCase().includes(searchLower);
+        const emailMatch = user.email.toLowerCase().includes(searchLower);
+        const ageMatch = user.age.toString().includes(searchValue);
 
-          return nameMatch || surnameMatch || emailMatch || ageMatch;
-        }
-      );
+        return nameMatch || surnameMatch || emailMatch || ageMatch;
+      });
 
       setUsers(allUsers);
       setFilteredUsers(filteredData);

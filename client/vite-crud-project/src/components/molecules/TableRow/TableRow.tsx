@@ -15,9 +15,14 @@ import { IUser } from '../../../shared/api/types';
 interface TableRowProps {
   users: IUser[];
   onDeleteUser: (userId: string) => void;
+  onUpdateUser: (updatedUser: IUser) => void;
 }
 
-const TableRow: React.FC<TableRowProps> = ({ users, onDeleteUser }) => {
+const TableRow: React.FC<TableRowProps> = ({
+  users,
+  onDeleteUser,
+  onUpdateUser,
+}) => {
   const itemsPerPage = 10;
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
   const [deletingUserId, setDeletingUserId] = useState<string | null>(null);
@@ -107,6 +112,14 @@ const TableRow: React.FC<TableRowProps> = ({ users, onDeleteUser }) => {
         setEditedSurname('');
         setEditedEmail('');
         setEditedAge('');
+
+        // Call onUpdateUser with the updated user
+        const updatedUser: IUser | undefined = filteredUsers.find(
+          (user) => user._id === editingUserId
+        );
+        if (updatedUser) {
+          onUpdateUser({ ...updatedUser, ...editedUser });
+        }
       }
     } catch (error) {
       console.error(`Error editing user with ID ${editingUserId}:`, error);

@@ -10,6 +10,18 @@ interface TableProps {
 const Table: React.FC<TableProps> = ({ users }) => {
   const [updatedUsers, setUpdatedUsers] = useState<IUser[]>(users);
 
+  const handleUpdateUser = (updatedUser: IUser) => {
+    setUpdatedUsers((prevUsers) => {
+      const index = prevUsers.findIndex((user) => user._id === updatedUser._id);
+      if (index !== -1) {
+        const updatedUsers = [...prevUsers];
+        updatedUsers[index] = updatedUser;
+        return updatedUsers;
+      }
+      return prevUsers;
+    });
+  };
+
   const handleDeleteUser = (userId: string) => {
     const filteredUsers = updatedUsers.filter((user) => user._id !== userId);
     setUpdatedUsers(filteredUsers);
@@ -28,7 +40,11 @@ const Table: React.FC<TableProps> = ({ users }) => {
           <StyledRow>El.Paštas</StyledRow>
           <StyledRow>Amžius</StyledRow>
         </StyledNamesDiv>
-        <TableRow users={updatedUsers} onDeleteUser={handleDeleteUser} />
+        <TableRow
+          users={updatedUsers}
+          onDeleteUser={handleDeleteUser}
+          onUpdateUser={handleUpdateUser} // Pass the function here
+        />
       </StyledTableDiv>
     </div>
   );
