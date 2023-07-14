@@ -42,11 +42,11 @@
 
 <h3> Desktop
 
-![Alt text](image.png)
-![Alt text](image-1.png)
-![Alt text](image-2.png)
-![Alt text](image-3.png)
-![Alt text](image-4.png)
+(![Alt text](assets/image.png))
+(![Alt text](assets/image-1.png))
+(![Alt text](assets/image-2.png))
+(![Alt text](assets/image-3.png))
+(![Alt text](assets/image-4.png))
 
 <h3> Mobile
 
