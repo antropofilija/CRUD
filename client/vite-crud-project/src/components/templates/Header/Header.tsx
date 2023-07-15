@@ -10,6 +10,7 @@ interface HeaderProps {
   setFilteredUsers: React.Dispatch<React.SetStateAction<IUser[]>>;
   searchValue: string;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  userAdded: (user: IUser) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -17,6 +18,7 @@ const Header: React.FC<HeaderProps> = ({
   setFilteredUsers,
   searchValue,
   setSearchValue,
+  userAdded,
 }) => {
   const handleSearch = () => {
     const filteredData = users.filter((user) => {
@@ -40,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({
           setSearchValue={setSearchValue}
           onSearch={handleSearch}
         />
-        <HeaderButton />
+        <HeaderButton userAdded={userAdded} />
       </StyledAddButton>
     </StyledWrapper>
   );

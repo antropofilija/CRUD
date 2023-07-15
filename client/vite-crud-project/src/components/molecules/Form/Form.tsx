@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Input from '../../atoms/Input';
 import AddButton from '../AddButton';
-
 import { StyledForm } from './styles';
+import { IUser } from '../../../shared/api/types';
+import axios from 'axios';
 
 export type FormValue = {
   name: string;
@@ -13,15 +14,23 @@ export type FormValue = {
 
 type FormProps = {
   onSubmitSuccess: () => void;
+  userAdded: (user: IUser) => void;
 };
 
-const Form: React.FC<FormProps> = ({ onSubmitSuccess }) => {
+const Form: React.FC<FormProps> = ({ onSubmitSuccess, userAdded }) => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [age, setAge] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleFormSubmit = async () => {
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
     const formValue: FormValue = {
       name,
       surname,
@@ -29,12 +38,23 @@ const Form: React.FC<FormProps> = ({ onSubmitSuccess }) => {
       age: parseInt(age),
     };
 
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/crud',
+        formValue
+      );
+      const newUser: IUser = response.data;
+      userAdded(newUser);
+      onSubmitSuccess();
+    } catch (error) {
+      console.error('Error adding user:', error);
+    }
+
+    setIsSubmitting(false);
     setName('');
     setSurname('');
     setEmail('');
     setAge('');
-
-    onSubmitSuccess();
   };
 
   return (

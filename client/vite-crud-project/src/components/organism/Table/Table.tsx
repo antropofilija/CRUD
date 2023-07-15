@@ -8,10 +8,14 @@ interface TableProps {
 }
 
 const Table: React.FC<TableProps> = ({ users }) => {
-  const [updatedUsers, setUpdatedUsers] = useState<IUser[]>(users);
+  const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
+
+  useEffect(() => {
+    setFilteredUsers(users);
+  }, [users]);
 
   const handleUpdateUser = (updatedUser: IUser) => {
-    setUpdatedUsers((prevUsers) => {
+    setFilteredUsers((prevUsers) => {
       const index = prevUsers.findIndex((user) => user._id === updatedUser._id);
       if (index !== -1) {
         const updatedUsers = [...prevUsers];
@@ -23,13 +27,9 @@ const Table: React.FC<TableProps> = ({ users }) => {
   };
 
   const handleDeleteUser = (userId: string) => {
-    const filteredUsers = updatedUsers.filter((user) => user._id !== userId);
-    setUpdatedUsers(filteredUsers);
+    const updatedUsers = filteredUsers.filter((user) => user._id !== userId);
+    setFilteredUsers(updatedUsers);
   };
-
-  useEffect(() => {
-    setUpdatedUsers(users);
-  }, [users]);
 
   return (
     <div>
@@ -41,9 +41,9 @@ const Table: React.FC<TableProps> = ({ users }) => {
           <StyledRow>Amžius</StyledRow>
         </StyledNamesDiv>
         <TableRow
-          users={updatedUsers}
+          users={filteredUsers}
           onDeleteUser={handleDeleteUser}
-          onUpdateUser={handleUpdateUser} // Pass the function here
+          onUpdateUser={handleUpdateUser}
         />
       </StyledTableDiv>
     </div>

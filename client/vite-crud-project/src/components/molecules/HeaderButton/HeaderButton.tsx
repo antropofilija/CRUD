@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import Button from '../../atoms/Button';
 import Modal from '../../atoms/Modal';
 import Form from '../Form';
+import { IUser } from '../../../shared/api/types';
 
-const HeaderButton = () => {
+interface IHeaderButton {
+  userAdded: (user: IUser) => void;
+}
+
+const HeaderButton = ({ userAdded }: IHeaderButton) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
@@ -29,7 +34,7 @@ const HeaderButton = () => {
       />
       {isModalOpen && !isFormSubmitted && (
         <Modal onClose={handleCloseModal} isOpen={isModalOpen}>
-          <Form onSubmitSuccess={handleFormSubmit} />
+          <Form onSubmitSuccess={handleFormSubmit} userAdded={userAdded} />
         </Modal>
       )}
       {isFormSubmitted && (
