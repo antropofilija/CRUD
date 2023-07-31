@@ -16,7 +16,7 @@
 - Install node_modules `npm ci`
 - Run server `npm run dev`
 
-<br>
+
 
 <h2>Server
 <h3>How to start backend server?</h3>
